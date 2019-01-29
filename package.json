@@ -1,0 +1,36 @@
+{
+    "name": "bombertron",
+    "version": "1.0.0",
+    "description": "Test file for checking repo update",
+    "main": "__game-scripts.js",
+    "dependencies": {},
+    "devDependencies": {
+        "prettier": "^1.15.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TrophyKing/bombertron.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/TrophyKing/bombertron/issues"
+    },
+    "homepage": "https://github.com/TrophyKing/bombertron#readme",
+    "prettier": {
+        "arrowParens": "always",
+        "bracketSpacing": true,
+        "htmlWhitespaceSensitivity": "css",
+        "insertPragma": false,
+        "jsxBracketSameLine": false,
+        "jsxSingleQuote": false,
+        "proseWrap": "preserve",
+        "requirePragma": false,
+        "semi": true,
+        "singleQuote": false,
+        "tabWidth": 4,
+        "trailingComma": "es5",
+        "useTabs": false,
+        "printWidth": 120
+    }
+}

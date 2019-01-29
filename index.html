@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+        />
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <link rel="stylesheet" href="https://use.typekit.net/vva5ljv.css" />
+        <link rel="manifest" href="manifest.json" />
+        <title>Trophy King: Bombertron</title>
+        <meta name="description" content="Play and earn with Bombertron!" />
+        <script src="tronweb.js"></script>
+        <script src="utils.js"></script>
+        <script src="playcanvas-stable.min.js"></script>
+        <script>
+            ASSET_PREFIX = "";
+            SCRIPT_PREFIX = "";
+            SCENE_PATH = "467100.json";
+            CONTEXT_OPTIONS = {
+                alpha: false,
+                preserveDrawingBuffer: false,
+            };
+            SCRIPTS = [
+                5327658,
+                5327659,
+                5333616,
+                5340285,
+                5550024,
+                5592671,
+                5652181,
+                5666386,
+                5684095,
+                5690958,
+                5691083,
+                5696024,
+                5696069,
+                5707139,
+                5724969,
+                5727468,
+                5728099,
+            ];
+            CONFIG_FILENAME = "config.json";
+            INPUT_SETTINGS = {
+                useKeyboard: true,
+                useMouse: true,
+                useGamepads: false,
+                useTouch: true,
+            };
+            pc.script.legacy = false;
+        </script>
+        <script>
+            window.onload = async function() {
+                console.log("DOM/Window loaded.");
+
+                const initializeTronWeb = async () => {
+                    // const TRONGRID_API_FULL = "http://127.0.0.1:8090";
+                    // const TRONGRID_API_SOL = "http://127.0.0.1:8091";
+                    // const TRONGRID_API_EVENT = "http://127.0.0.1:8092";
+                    const TRONGRID_API_FULL = "https://api.shasta.trongrid.io";
+                    const TRONGRID_API_SOL = "https://api.shasta.trongrid.io";
+                    const TRONGRID_API_EVENT = "https://api.shasta.trongrid.io";
+                    // const TRONGRID_API_FULL = "https://api.trongrid.io";
+                    // const TRONGRID_API_SOL = "https://api.trongrid.io";
+                    // const TRONGRID_API_EVENT = "https://api.trongrid.io";
+
+                    window.tronWeb = new TronWeb(TRONGRID_API_FULL, TRONGRID_API_SOL, TRONGRID_API_EVENT);
+                    await Utils.setTronWeb(window.tronWeb);
+                };
+
+                if (!window.tronWeb) {
+                    console.error("Using TRON Foundation address...");
+                    const FOUNDATION_ADDRESS = "TWiWt5SEDzaEqS6kE5gandWMNfxR2B5xzg";
+
+                    // Set default address (foundation address) used for contract calls
+                    // Directly overwrites the address object as TronLink disabled the
+                    // function call
+                    window.tronWeb.defaultAddress = {
+                        hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
+                        base58: FOUNDATION_ADDRESS,
+                    };
+
+                    initializeTronWeb().then((e) => {});
+
+                    var tries = 0;
+
+                    const timer = setInterval(() => {
+                        if (tries >= 10) {
+                            initializeTronWeb().then((e) => {});
+                            clearInterval(timer);
+                        }
+
+                        if (!window.tronWeb) {
+                            return tries++;
+                        } else {
+                            clearInterval(timer);
+                        }
+                    }, 100);
+                } else {
+                    await Utils.setTronWeb(window.tronWeb);
+                }
+
+                window.tronWeb.on("addressChanged", async () => {
+                    await Utils.setTronWeb(window.tronWeb);
+                });
+
+                window.Utils = (await Utils) || {};
+            };
+        </script>
+    </head>
+    <body>
+        <script src="__start__.js"></script>
+        <script src="__loading__.js"></script>
+    </body>
+</html>
